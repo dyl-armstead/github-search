@@ -29,8 +29,9 @@ function getRepos(userSearch, maxResults=10) {
        .then(response => {
          if (response.ok) {
            return response.json();
-         }
+         } else {
          throw new Error(response.statusText);
+         }
        })
        .then(responseJson => displayResults(responseJson, maxResults))
        .catch(err => {
@@ -42,16 +43,14 @@ function getRepos(userSearch, maxResults=10) {
 function displayResults(responseJson, maxResults) {
     console.log(responseJson);
     $('#results').empty();
+    $('#results').removeClass('hidden');
     // iterate through the articles array, stopping at the max number of results
     for (let i = 0; i < maxResults ; i++){
       $('#results').append(
-        `<li><h3><a href="${responseJson.value[i].owner.url}">${responseJson.value[i].owner.name}</a></h3>
-        <p>${responseJson.value[i].owner.description}</p>
-        <p>By ${responseJson.value[i].owner.login}</p>
+        `<li><h3><a href="${responseJson[i].html_url}">${responseJson[i].name}</a></h3>
+        <p>${responseJson[i].description}</p>
         </li>`
       )};
-    //display the results section  
-    $('#results').removeClass('hidden');
     console.log('displayResults ran')
   };
 
@@ -61,7 +60,9 @@ $(watchForm);
 
 
 
-
+//`<li><h3><a href="${responseJson[i[i+1]].html_url}">${responseJson[i[i+1]].name}</a></h3>
+ //       <p>${responseJson[i[i+1]].description}</p>
+  //      </li>`
 
 
 
